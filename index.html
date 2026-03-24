@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Game Feedback</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background: #0f172a;
+        color: white;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+    }
+
+    .container {
+        background: #1e293b;
+        padding: 20px;
+        border-radius: 10px;
+        width: 350px;
+        box-shadow: 0 0 10px rgba(0,0,0,0.5);
+    }
+
+    h2 { text-align: center; }
+
+    .code-box {
+        background: #334155;
+        padding: 10px;
+        text-align: center;
+        border-radius: 5px;
+        margin-bottom: 10px;
+        font-weight: bold;
+        font-size: 16px;
+        color: gold;
+    }
+
+    input, textarea, button {
+        width: 100%;
+        margin-top: 10px;
+        padding: 10px;
+        border-radius: 5px;
+        border: none;
+    }
+
+    input, textarea { background: #334155; color: white; }
+
+    button {
+        background: #22c55e;
+        color: white;
+        font-weight: bold;
+        cursor: pointer;
+    }
+
+    button:hover { background: #16a34a; }
+
+    .coins { text-align: center; margin-top: 10px; font-weight: bold; color: gold; }
+</style>
+</head>
+<body>
+
+<div class="container">
+    <h2>🎮 Game Feedback</h2>
+
+    <!-- RANDOM CODE DISPLAY -->
+    <div class="code-box" id="randomCodeBox"></div>
+    <button onclick="copyCode()">Copy Code</button>
+
+    <!-- ENTER CODE -->
+    <input type="text" id="codeInput" placeholder="Enter code">
+    <button onclick="unlockCoins()">Unlock Coins</button>
+
+    <div class="coins" id="coinDisplay">Coins: 0</div>
+
+    <!-- FEEDBACK FORM -->
+    <form action="https://formsubmit.co/tivalsdeveloper@gmail.com" method="POST">
+        <input type="hidden" name="_captcha" value="false">
+        <input type="email" name="email" placeholder="Enter your email" required>
+        <textarea name="comment" rows="4" placeholder="Your feedback..." required></textarea>
+        <button type="submit">Submit Feedback</button>
+    </form>
+
+</div>
+
+<script>
+let coins = 0;
+
+// FIXED CODES
+const codes = [
+    "A9K2XQ",
+    "7MZL4P",
+    "QW8R2T",
+    "X1B9CD",
+    "PL6Z0A",
+    "H2K9LM",
+    "T8R5QP",
+    "Z4X7CV",
+    "N3M8JK",
+    "Y6P2WD"
+];
+
+// Load used codes globally in localStorage
+let usedCodes = JSON.parse(localStorage.getItem("usedCodes")) || [];
+
+// Assign code to user if not already assigned
+let userCode = localStorage.getItem("userCode");
+
+if (!userCode) {
+    // Pick a code that hasn't been used
+    let availableCodes = codes.filter(c => !usedCodes.includes(c));
+    if (availableCodes.length > 0) {
+        userCode = availableCodes[Math.floor(Math.random() * availableCodes.length)];
+        localStorage.setItem("userCode", userCode);
+    } else {
+        userCode = "No codes left!";
+    }
+}
+
+document.getElementById("randomCodeBox").innerText = "Code: " + userCode;
+
+// Copy code
+function copyCode() {
+    if (userCode && userCode !== "No codes left!") {
+        navigator.clipboard.writeText(userCode);
+        alert("Copied: " + userCode);
+    }
+}
+
+// Unlock coins
+function unlockCoins() {
+    let input = document.getElementById("codeInput").value;
+
+    if (input === userCode) {
+        coins += 3000;
+        document.getElementById("coinDisplay").innerText = "Coins: " + coins;
+        alert("🎉 3000 coins unlocked!");
+
+        // Mark code as used globally
+        usedCodes.push(userCode);
+        localStorage.setItem("usedCodes", JSON.stringify(usedCodes));
+
+        // Remove user's code
+        localStorage.removeItem("userCode");
+        document.getElementById("randomCodeBox").innerText = "Code used!";
+        userCode = null;
+    } else {
+        alert("❌ Invalid code!");
+    }
+}
+</script>
+
+</body>
+</html>
