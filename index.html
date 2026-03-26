@@ -1,166 +1,715 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <!-- Viewport meta tag (Required for mobile responsiveness on standalone pages) -->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <meta charset="UTF-8">
-    <title>Feedback & Help</title>
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Support Chatbot | Tivals Feedback</title>
     <style>
-        /* Wrapper to prevent the form from touching the screen edges on mobile */
-        .tivals-form-wrapper {
-            width: 100%;
-            padding: 15px; 
+        * {
+            margin: 0;
+            padding: 0;
             box-sizing: border-box;
+        }
+
+        body {
+            background: #f1f5f9;
+            min-height: 100vh;
             display: flex;
-            justify-content: center; /* Centers the form on the page */
+            align-items: center;
+            justify-content: center;
+            font-family: 'Segoe UI', 'Inter', system-ui, -apple-system, sans-serif;
+            padding: 16px;
         }
 
-        /* The actual form container */
-        .tivals-form-container {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #ffffff;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
-            width: 100%; /* Allows it to shrink on small screens */
-            max-width: 500px; /* Stops it from stretching too wide on PCs */
-            box-sizing: border-box;
-            color: #333;
-        }
-
-        .tivals-form-container h3 {
-            color: #2563eb;
-            margin-top: 0;
-            margin-bottom: 20px;
-            text-align: center;
-            font-size: 24px;
-        }
-
-        .tivals-form-group {
-            margin-bottom: 18px;
-        }
-
-        .tivals-form-group label {
-            display: block;
-            margin-bottom: 6px;
-            font-weight: 600;
-            font-size: 14px;
-            color: #4b5563;
-        }
-
-        .tivals-form-group input, 
-        .tivals-form-group select, 
-        .tivals-form-group textarea {
-            width: 100%; /* Ensures inputs fill the container properly */
-            padding: 12px;
-            border: 1px solid #d1d5db;
-            border-radius: 6px;
-            box-sizing: border-box; /* Keeps padding inside the width limits */
-            font-family: inherit;
-            font-size: 15px;
-            transition: border-color 0.3s;
-        }
-
-        .tivals-form-group input:focus, 
-        .tivals-form-group select:focus, 
-        .tivals-form-group textarea:focus {
-            border-color: #2563eb;
-            outline: none;
-            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1); /* Nice glow effect on click */
-        }
-
-        .tivals-form-group textarea {
-            min-height: 120px;
-            resize: vertical; /* Allows user to drag the height, but not the width */
-        }
-
-        .tivals-submit-btn {
+        /* Main chatbot wrapper – same concept as original form wrapper */
+        .chatbot-wrapper {
             width: 100%;
-            padding: 14px;
-            background-color: #2563eb;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Chatbot container – card style */
+        .chatbot-card {
+            max-width: 550px;
+            width: 100%;
+            background-color: #ffffff;
+            border-radius: 28px;
+            box-shadow: 0 20px 35px -12px rgba(0, 0, 0, 0.15), 0 1px 3px rgba(0, 0, 0, 0.05);
+            overflow: hidden;
+            transition: all 0.2s ease;
+        }
+
+        /* Header area */
+        .chat-header {
+            background: #2563eb;
+            padding: 18px 24px;
             color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .chat-header h3 {
+            font-size: 1.4rem;
+            font-weight: 700;
+            letter-spacing: -0.2px;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .chat-header h3:before {
+            content: "💬";
+            font-size: 1.4rem;
+        }
+
+        .reset-btn {
+            background: rgba(255,255,255,0.2);
             border: none;
-            border-radius: 6px;
-            font-size: 16px;
-            font-weight: bold;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 40px;
+            font-size: 0.8rem;
+            font-weight: 600;
             cursor: pointer;
-            transition: background-color 0.3s, transform 0.1s;
+            backdrop-filter: blur(2px);
+            transition: 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 6px;
         }
 
-        .tivals-submit-btn:hover {
-            background-color: #1d4ed8;
+        .reset-btn:hover {
+            background: rgba(255,255,255,0.35);
+            transform: scale(0.97);
         }
 
-        .tivals-submit-btn:active {
-            transform: scale(0.98); /* Slight click animation */
+        /* Messages container */
+        .chat-messages {
+            background: #fefefe;
+            padding: 20px 18px;
+            height: 440px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            scroll-behavior: smooth;
         }
 
-        /* MOBILE RESPONSIVENESS: Adjusts design for screens smaller than 480px (Phones) */
-        @media (max-width: 480px) {
-            .tivals-form-container {
-                padding: 20px 15px; /* Reduces inner padding to save screen space */
-            }
-            
-            .tivals-form-container h3 {
-                font-size: 20px; /* Slightly smaller title */
-            }
+        /* Bubble styling */
+        .message {
+            display: flex;
+            flex-direction: column;
+            max-width: 85%;
+            animation: fadeSlideUp 0.25s ease;
+        }
 
-            .tivals-form-group input, 
-            .tivals-form-group select, 
-            .tivals-form-group textarea {
-                padding: 10px; /* Slightly smaller inputs */
-                font-size: 14px;
+        .message.bot {
+            align-items: flex-start;
+        }
+
+        .message.user {
+            align-items: flex-end;
+            margin-left: auto;
+        }
+
+        .bubble {
+            padding: 12px 16px;
+            border-radius: 22px;
+            font-size: 0.95rem;
+            line-height: 1.4;
+            word-break: break-word;
+            box-shadow: 0 1px 1px rgba(0,0,0,0.05);
+        }
+
+        .bot .bubble {
+            background: #eef2ff;
+            color: #1e293b;
+            border-bottom-left-radius: 5px;
+            border-top-left-radius: 18px;
+        }
+
+        .user .bubble {
+            background: #2563eb;
+            color: white;
+            border-bottom-right-radius: 5px;
+            border-top-right-radius: 18px;
+        }
+
+        /* Quick reply buttons container */
+        .quick-replies {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 12px;
+        }
+
+        .quick-btn {
+            background: white;
+            border: 1.5px solid #2563eb;
+            color: #2563eb;
+            padding: 8px 18px;
+            border-radius: 40px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.2s;
+            font-family: inherit;
+        }
+
+        .quick-btn:hover {
+            background: #2563eb;
+            color: white;
+            transform: translateY(-1px);
+        }
+
+        /* Action buttons (send / edit) */
+        .action-buttons {
+            display: flex;
+            gap: 14px;
+            margin-top: 12px;
+            flex-wrap: wrap;
+        }
+
+        .action-btn {
+            padding: 8px 20px;
+            border-radius: 40px;
+            font-weight: 700;
+            border: none;
+            cursor: pointer;
+            font-family: inherit;
+            transition: 0.2s;
+        }
+
+        .action-btn.primary {
+            background: #2563eb;
+            color: white;
+            box-shadow: 0 2px 5px rgba(37,99,235,0.3);
+        }
+
+        .action-btn.primary:hover {
+            background: #1d4ed8;
+            transform: scale(0.97);
+        }
+
+        .action-btn.secondary {
+            background: #f1f5f9;
+            color: #334155;
+            border: 1px solid #cbd5e1;
+        }
+
+        .action-btn.secondary:hover {
+            background: #e2e8f0;
+        }
+
+        /* Typing indicator */
+        .typing-indicator {
+            display: flex;
+            gap: 5px;
+            padding: 8px 14px;
+            background: #eef2ff;
+            width: fit-content;
+            border-radius: 24px;
+            align-items: center;
+        }
+
+        .typing-indicator span {
+            width: 8px;
+            height: 8px;
+            background: #4b5563;
+            border-radius: 50%;
+            animation: blink 1.4s infinite both;
+        }
+
+        .typing-indicator span:nth-child(2) { animation-delay: 0.2s; }
+        .typing-indicator span:nth-child(3) { animation-delay: 0.4s; }
+
+        @keyframes blink {
+            0%, 80%, 100% { opacity: 0.3; transform: scale(0.8);} 
+            40% { opacity: 1; transform: scale(1);} 
+        }
+
+        /* Input area */
+        .chat-input-area {
+            background: white;
+            border-top: 1px solid #e2e8f0;
+            padding: 14px 18px;
+            display: flex;
+            gap: 12px;
+            align-items: center;
+        }
+
+        .chat-input-area input {
+            flex: 1;
+            padding: 12px 16px;
+            border: 1px solid #cbd5e1;
+            border-radius: 44px;
+            font-size: 0.95rem;
+            font-family: inherit;
+            outline: none;
+            transition: 0.2s;
+            background: #fafcff;
+        }
+
+        .chat-input-area input:focus {
+            border-color: #2563eb;
+            box-shadow: 0 0 0 3px rgba(37,99,235,0.2);
+        }
+
+        .send-btn {
+            background: #2563eb;
+            border: none;
+            color: white;
+            width: 44px;
+            height: 44px;
+            border-radius: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: 0.2s;
+            font-size: 1.2rem;
+        }
+
+        .send-btn:hover {
+            background: #1d4ed8;
+            transform: scale(0.96);
+        }
+
+        /* small screens */
+        @media (max-width: 500px) {
+            .chatbot-card {
+                border-radius: 20px;
             }
+            .chat-messages {
+                height: 420px;
+                padding: 16px 14px;
+            }
+            .bubble {
+                font-size: 0.9rem;
+                padding: 10px 14px;
+            }
+            .quick-btn {
+                padding: 6px 14px;
+                font-size: 0.8rem;
+            }
+        }
+
+        @keyframes fadeSlideUp {
+            from {
+                opacity: 0;
+                transform: translateY(8px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* subtle scroll */
+        .chat-messages::-webkit-scrollbar {
+            width: 5px;
+        }
+        .chat-messages::-webkit-scrollbar-track {
+            background: #eef2ff;
+            border-radius: 10px;
+        }
+        .chat-messages::-webkit-scrollbar-thumb {
+            background: #94a3b8;
+            border-radius: 10px;
         }
     </style>
 </head>
 <body>
-
-    <div class="tivals-form-wrapper">
-        <div class="tivals-form-container">
-            <h3>Feedback & Help</h3>
-            
-            <!-- Sends data directly to your email -->
-            <form action="https://formsubmit.co/tivalsdeveloper@gmail.com" method="POST">
-                
-                <!-- Email subject line -->
-                <input type="hidden" name="_subject" value="New Support Request for TivalsDeveloper!">
-                
-                <!-- Send users to a generic thank you page (optional, remove to use default) -->
-                <!-- <input type="hidden" name="_next" value="https://yourwebsite.com/thanks.html"> -->
-
-                <div class="tivals-form-group">
-                    <label for="name">Your Name</label>
-                    <input type="text" id="name" name="name" required placeholder="Enter your name">
-                </div>
-
-                <div class="tivals-form-group">
-                    <label for="email">Your Email Address</label>
-                    <!-- Type="email" automatically brings up the right keyboard on mobile -->
-                    <input type="email" id="email" name="email" required placeholder="Enter your email">
-                </div>
-
-                <div class="tivals-form-group">
-                    <label for="topic">How can we help?</label>
-                    <select id="topic" name="topic" required>
-                        <option value="" disabled selected>Select a topic...</option>
-                        <option value="Need Help">I need help</option>
-                        <option value="Bug Report">I found a bug</option>
-                        <option value="Feature Request">Feature Request</option>
-                        <option value="Feedback">I have feedback</option>
-                    </select>
-                </div>
-
-                <div class="tivals-form-group">
-                    <label for="message">Message</label>
-                    <textarea id="message" name="message" required placeholder="Please describe your issue or feedback in detail..."></textarea>
-                </div>
-
-                <button type="submit" class="tivals-submit-btn">Send Message</button>
-            </form>
+<div class="chatbot-wrapper">
+    <div class="chatbot-card">
+        <div class="chat-header">
+            <h3>Support Assistant</h3>
+            <button class="reset-btn" id="resetChatBtn">⟳ Restart</button>
+        </div>
+        <div class="chat-messages" id="chatMessages">
+            <!-- dynamic messages appear here -->
+        </div>
+        <div class="chat-input-area">
+            <input type="text" id="userInput" placeholder="Type your answer..." autocomplete="off">
+            <button class="send-btn" id="sendBtn">➤</button>
         </div>
     </div>
+</div>
+
+<script>
+    // ------------------------------
+    //  CHATBOT STATE & DATA
+    // ------------------------------
+    let currentStep = 'init';      // init, name, email, topic, message, confirm
+    let userData = {
+        name: '',
+        email: '',
+        topic: '',
+        message: ''
+    };
+    
+    // DOM elements
+    const messagesContainer = document.getElementById('chatMessages');
+    const userInput = document.getElementById('userInput');
+    const sendBtn = document.getElementById('sendBtn');
+    const resetBtn = document.getElementById('resetChatBtn');
+    
+    // Helper: scroll to bottom
+    function scrollToBottom() {
+        messagesContainer.scrollTop = messagesContainer.scrollHeight;
+    }
+    
+    // Helper: add a message bubble (text only)
+    function addMessage(sender, text, isHtml = false) {
+        const messageDiv = document.createElement('div');
+        messageDiv.className = `message ${sender}`;
+        const bubbleDiv = document.createElement('div');
+        bubbleDiv.className = 'bubble';
+        if (isHtml) {
+            bubbleDiv.innerHTML = text;
+        } else {
+            bubbleDiv.innerText = text;
+        }
+        messageDiv.appendChild(bubbleDiv);
+        messagesContainer.appendChild(messageDiv);
+        scrollToBottom();
+    }
+    
+    // Remove temporary interactive elements (quick replies, action buttons) if any
+    function removeTempInteractiveElements() {
+        const existingTemp = document.querySelectorAll('.temp-interactive');
+        existingTemp.forEach(el => el.remove());
+    }
+    
+    // Add quick reply buttons as a temporary bot message container
+    function addQuickReplyButtons(options, onSelectCallback) {
+        removeTempInteractiveElements();
+        const wrapperDiv = document.createElement('div');
+        wrapperDiv.className = `message bot temp-interactive`;
+        const bubbleDiv = document.createElement('div');
+        bubbleDiv.className = 'bubble';
+        bubbleDiv.style.paddingBottom = '8px';
+        const buttonsContainer = document.createElement('div');
+        buttonsContainer.className = 'quick-replies';
+        
+        options.forEach(opt => {
+            const btn = document.createElement('button');
+            btn.className = 'quick-btn';
+            btn.innerText = opt.label;
+            btn.addEventListener('click', () => {
+                // disable all buttons to prevent double selection
+                document.querySelectorAll('.quick-btn').forEach(b => b.disabled = true);
+                onSelectCallback(opt.value);
+                wrapperDiv.remove();  // remove buttons after selection
+            });
+            buttonsContainer.appendChild(btn);
+        });
+        
+        bubbleDiv.appendChild(buttonsContainer);
+        wrapperDiv.appendChild(bubbleDiv);
+        messagesContainer.appendChild(wrapperDiv);
+        scrollToBottom();
+    }
+    
+    // Add confirm action buttons (Send & Edit)
+    function addConfirmActions(onSend, onEdit) {
+        removeTempInteractiveElements();
+        const actionWrapper = document.createElement('div');
+        actionWrapper.className = `message bot temp-interactive`;
+        const bubbleDiv = document.createElement('div');
+        bubbleDiv.className = 'bubble';
+        const actionsDiv = document.createElement('div');
+        actionsDiv.className = 'action-buttons';
+        
+        const sendAction = document.createElement('button');
+        sendAction.innerText = '✅ Send Feedback';
+        sendAction.className = 'action-btn primary';
+        sendAction.addEventListener('click', () => {
+            sendAction.disabled = true;
+            editAction.disabled = true;
+            onSend();
+        });
+        
+        const editAction = document.createElement('button');
+        editAction.innerText = '✏️ Edit / Start over';
+        editAction.className = 'action-btn secondary';
+        editAction.addEventListener('click', () => {
+            onEdit();
+        });
+        
+        actionsDiv.appendChild(sendAction);
+        actionsDiv.appendChild(editAction);
+        bubbleDiv.appendChild(actionsDiv);
+        actionWrapper.appendChild(bubbleDiv);
+        messagesContainer.appendChild(actionWrapper);
+        scrollToBottom();
+    }
+    
+    // Show typing indicator (fake)
+    async function showTyping(duration = 1200) {
+        const typingDiv = document.createElement('div');
+        typingDiv.className = 'message bot temp-interactive';
+        typingDiv.id = 'typingIndicator';
+        const bubble = document.createElement('div');
+        bubble.className = 'bubble typing-indicator';
+        bubble.innerHTML = '<span></span><span></span><span></span>';
+        typingDiv.appendChild(bubble);
+        messagesContainer.appendChild(typingDiv);
+        scrollToBottom();
+        await new Promise(r => setTimeout(r, duration));
+        if (document.getElementById('typingIndicator')) {
+            document.getElementById('typingIndicator')?.remove();
+        }
+    }
+    
+    // Reset everything
+    function fullReset() {
+        // reset state
+        currentStep = 'init';
+        userData = { name: '', email: '', topic: '', message: '' };
+        // clear all messages
+        messagesContainer.innerHTML = '';
+        removeTempInteractiveElements();
+        // Start fresh conversation
+        startConversation();
+    }
+    
+    // The main conversation flow
+    async function startConversation() {
+        addMessage('bot', '👋 Hey there! I\'m your support assistant. I\'ll help you send feedback or request help — just like the contact form. Let\'s get started!');
+        await showTyping(500);
+        askName();
+    }
+    
+    function askName() {
+        currentStep = 'name';
+        addMessage('bot', 'What\'s your name?');
+    }
+    
+    function askEmail() {
+        currentStep = 'email';
+        addMessage('bot', 'Great! What\'s your email address? (So we can reply)');
+    }
+    
+    function askTopic() {
+        currentStep = 'topic';
+        addMessage('bot', 'How can we help you? Select a topic:');
+        // quick reply buttons for topic selection
+        addQuickReplyButtons([
+            { label: '🆘 Need Help', value: 'Need Help' },
+            { label: '🐞 Bug Report', value: 'Bug Report' },
+            { label: '✨ Feature Request', value: 'Feature Request' },
+            { label: '💬 General Feedback', value: 'Feedback' }
+        ], (selectedTopic) => {
+            userData.topic = selectedTopic;
+            addMessage('user', selectedTopic);
+            askMessage();
+        });
+        // also allow typing a custom topic (optional but map to closest)
+        // we\'ll let the user optionally type, but the buttons are main
+        // but we handle typed input in processUserText
+    }
+    
+    function askMessage() {
+        currentStep = 'message';
+        addMessage('bot', 'Please describe your issue or feedback in detail. Tell us anything we should know:');
+    }
+    
+    function showConfirmation() {
+        currentStep = 'confirm';
+        const summary = `
+            <strong>📋 Please review:</strong><br>
+            • Name: ${escapeHtml(userData.name)}<br>
+            • Email: ${escapeHtml(userData.email)}<br>
+            • Topic: ${escapeHtml(userData.topic)}<br>
+            • Message: ${escapeHtml(userData.message.substring(0, 120))}${userData.message.length > 120 ? '…' : ''}<br>
+            <em>Ready to send?</em>
+        `;
+        addMessage('bot', summary, true);
+        addConfirmActions(() => submitFeedback(), () => {
+            addMessage('bot', '🔄 Restarting from scratch — no worries, let\'s do it fresh!');
+            fullReset();
+        });
+    }
+    
+    // Submit to FormSubmit endpoint (same as original form)
+    async function submitFeedback() {
+        addMessage('bot', '⏳ Sending your message, one moment...');
+        const formEndpoint = 'https://formsubmit.co/tivalsdeveloper@gmail.com';
+        
+        // Prepare payload exactly as original form would send (with hidden _subject)
+        const formData = new URLSearchParams();
+        formData.append('name', userData.name);
+        formData.append('email', userData.email);
+        formData.append('topic', userData.topic);
+        formData.append('message', userData.message);
+        formData.append('_subject', `[Chatbot] Support Request from ${userData.name}`);
+        // optional: avoid captcha? not needed, but we skip _captcha
+        
+        try {
+            const response = await fetch(formEndpoint, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                    'Accept': 'application/json'  // tells formsubmit to return JSON instead of redirect
+                },
+                body: formData.toString()
+            });
+            
+            if (response.ok) {
+                const result = await response.json();
+                if (result.success === true || response.status === 200) {
+                    addMessage('bot', '✅ **Message sent!** 🎉 Thank you for reaching out. Our team will get back to you shortly.', true);
+                    addMessage('bot', '💡 Need anything else? Hit the "Restart" button to start a new conversation.');
+                    // disable further step modifications, but reset button works.
+                    currentStep = 'finished';
+                    userInput.disabled = false; // but not interfering
+                } else {
+                    throw new Error('Unexpected response');
+                }
+            } else {
+                // fallback: sometimes even with 200 it works, but if failed:
+                addMessage('bot', '⚠️ Something went wrong while sending. Please try again later or use the restart button. (Error: ' + response.status + ')');
+            }
+        } catch (error) {
+            console.error(error);
+            addMessage('bot', '❌ Oops! Network or server issue. Could not deliver message. You can try again by restarting the chat.');
+        } finally {
+            // remove any leftover temp elements
+            removeTempInteractiveElements();
+            // ensure input field is usable but not interfering with finished state
+            if (currentStep === 'finished') {
+                userInput.placeholder = "Chat completed — press restart to begin";
+            }
+        }
+    }
+    
+    // Helper: sanitize
+    function escapeHtml(str) {
+        if (!str) return '';
+        return str.replace(/[&<>]/g, function(m) {
+            if (m === '&') return '&amp;';
+            if (m === '<') return '&lt;';
+            if (m === '>') return '&gt;';
+            return m;
+        }).replace(/[800-BFF][DC00-DFFF]/g, function(c) {
+            return c;
+        });
+    }
+    
+    // Handle user text input (from input field)
+    async function processUserText(rawText) {
+        const text = rawText.trim();
+        if (text === "") {
+            addMessage('bot', 'Please write something — I\'m here to help 😊');
+            return;
+        }
+        
+        // If conversation finished, block further text and hint reset
+        if (currentStep === 'finished') {
+            addMessage('bot', '🔄 This conversation is completed. Press "Restart" to send another request.');
+            userInput.value = '';
+            return;
+        }
+        
+        // Add user message to chat
+        addMessage('user', text);
+        userInput.value = '';
+        
+        // remove any lingering quick-reply/action UI
+        removeTempInteractiveElements();
+        
+        // process based on step
+        switch (currentStep) {
+            case 'name':
+                if (text.length < 2) {
+                    addMessage('bot', 'Please enter a valid name (at least 2 characters).');
+                } else {
+                    userData.name = text;
+                    askEmail();
+                }
+                break;
+            case 'email':
+                const emailRegex = /^[^\s@]+@([^
+ \s@]+\.)+[^
+ \s@]+$/;
+                if (!emailRegex.test(text)) {
+                    addMessage('bot', 'Hmm, that doesn\'t look like a valid email. Please enter a correct email (e.g., name@example.com).');
+                } else {
+                    userData.email = text;
+                    askTopic();
+                }
+                break;
+            case 'topic':
+                // map typed text to one of the predefined topics
+                const lowerInput = text.toLowerCase();
+                let mappedTopic = null;
+                if (lowerInput.includes('help') || lowerInput.includes('support') || lowerInput === 'need help') mappedTopic = 'Need Help';
+                else if (lowerInput.includes('bug') || lowerInput.includes('error') || lowerInput.includes('crash')) mappedTopic = 'Bug Report';
+                else if (lowerInput.includes('feature') || lowerInput.includes('request') || lowerInput.includes('suggestion')) mappedTopic = 'Feature Request';
+                else if (lowerInput.includes('feedback') || lowerInput.includes('comment')) mappedTopic = 'Feedback';
+                
+                if (mappedTopic) {
+                    userData.topic = mappedTopic;
+                    addMessage('bot', `Selected topic: ${mappedTopic}`);
+                    askMessage();
+                } else {
+                    addMessage('bot', 'Please select a topic using the buttons above, or type one of: "Help", "Bug Report", "Feature Request", "Feedback".');
+                    // re-show quick replies? we re-add to make it easier
+                    askTopic();  // re-triggers topic step with buttons again
+                }
+                break;
+            case 'message':
+                if (text.length < 5) {
+                    addMessage('bot', 'Please provide a bit more detail (at least 5 characters). How can we assist you?');
+                } else {
+                    userData.message = text;
+                    await showTyping(500);
+                    showConfirmation();
+                }
+                break;
+            default:
+                // if in confirm but user typed something unexpected, remind them to use buttons
+                if (currentStep === 'confirm') {
+                    addMessage('bot', 'Please use the "Send Feedback" or "Edit / Start over" buttons above.');
+                } else {
+                    addMessage('bot', 'I\'m not sure what happened. Press "Restart" to start over.');
+                }
+                break;
+        }
+    }
+    
+    // Event listeners
+    function handleSend() {
+        const rawMessage = userInput.value;
+        if (rawMessage.trim() === "") return;
+        processUserText(rawMessage);
+    }
+    
+    sendBtn.addEventListener('click', handleSend);
+    userInput.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') {
+            e.preventDefault();
+            handleSend();
+        }
+    });
+    
+    resetBtn.addEventListener('click', () => {
+        fullReset();
+        userInput.disabled = false;
+        userInput.placeholder = "Type your answer...";
+        userInput.value = '';
+    });
+    
+    // Initial start
+    startConversation();
+    
+    // disable any unwanted double init but fine.
+</script>
 </body>
 </html>
