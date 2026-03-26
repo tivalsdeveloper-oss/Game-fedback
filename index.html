@@ -229,8 +229,8 @@
         .typing-indicator span:nth-child(3) { animation-delay: 0.4s; }
 
         @keyframes blink {
-            0%, 80%, 100% { opacity: 0.3; transform: scale(0.8);} 
-            40% { opacity: 1; transform: scale(1);} 
+            0%, 80%, 100% { opacity: 0.3; transform: scale(0.8);}
+            40% { opacity: 1; transform: scale(1);}
         }
 
         /* Input area */
@@ -511,7 +511,7 @@
             askMessage();
         });
         // also allow typing a custom topic (optional but map to closest)
-        // we\'ll let the user optionally type, but the buttons are main
+        // we'll let the user optionally type, but the buttons are main
         // but we handle typed input in processUserText
     }
     
@@ -597,7 +597,7 @@
             if (m === '<') return '&lt;';
             if (m === '>') return '&gt;';
             return m;
-        }).replace(/[800-BFF][DC00-DFFF]/g, function(c) {
+        }).replace(/[\uD800-\uDBFF][\uDC00-\uDFFF]/g, function(c) {
             return c;
         });
     }
@@ -606,7 +606,7 @@
     async function processUserText(rawText) {
         const text = rawText.trim();
         if (text === "") {
-            addMessage('bot', 'Please write something — I\'m here to help 😊');
+            addMessage('bot', 'Please write something — I’m here to help 😊');
             return;
         }
         
@@ -635,9 +635,7 @@
                 }
                 break;
             case 'email':
-                const emailRegex = /^[^\s@]+@([^
- \s@]+\.)+[^
- \s@]+$/;
+                const emailRegex = /^[^\s@]+@([^\s@]+\.)+[^\s@]+$/;
                 if (!emailRegex.test(text)) {
                     addMessage('bot', 'Hmm, that doesn\'t look like a valid email. Please enter a correct email (e.g., name@example.com).');
                 } else {
@@ -678,7 +676,7 @@
                 if (currentStep === 'confirm') {
                     addMessage('bot', 'Please use the "Send Feedback" or "Edit / Start over" buttons above.');
                 } else {
-                    addMessage('bot', 'I\'m not sure what happened. Press "Restart" to start over.');
+                    addMessage('bot', 'I’m not sure what happened. Press "Restart" to start over.');
                 }
                 break;
         }
