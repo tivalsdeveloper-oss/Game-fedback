@@ -1,154 +1,166 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Game Feedback</title>
-<style>
-    body {
-        font-family: Arial, sans-serif;
-        background: #0f172a;
-        color: white;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 100vh;
-    }
+    <!-- Viewport meta tag (Required for mobile responsiveness on standalone pages) -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    .container {
-        background: #1e293b;
-        padding: 20px;
-        border-radius: 10px;
-        width: 350px;
-        box-shadow: 0 0 10px rgba(0,0,0,0.5);
-    }
+    <meta charset="UTF-8">
+    <title>Feedback & Help</title>
 
-    h2 { text-align: center; }
+    <style>
+        /* Wrapper to prevent the form from touching the screen edges on mobile */
+        .tivals-form-wrapper {
+            width: 100%;
+            padding: 15px; 
+            box-sizing: border-box;
+            display: flex;
+            justify-content: center; /* Centers the form on the page */
+        }
 
-    .code-box {
-        background: #334155;
-        padding: 10px;
-        text-align: center;
-        border-radius: 5px;
-        margin-bottom: 10px;
-        font-weight: bold;
-        font-size: 16px;
-        color: gold;
-    }
+        /* The actual form container */
+        .tivals-form-container {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+            width: 100%; /* Allows it to shrink on small screens */
+            max-width: 500px; /* Stops it from stretching too wide on PCs */
+            box-sizing: border-box;
+            color: #333;
+        }
 
-    input, textarea, button {
-        width: 100%;
-        margin-top: 10px;
-        padding: 10px;
-        border-radius: 5px;
-        border: none;
-    }
+        .tivals-form-container h3 {
+            color: #2563eb;
+            margin-top: 0;
+            margin-bottom: 20px;
+            text-align: center;
+            font-size: 24px;
+        }
 
-    input, textarea { background: #334155; color: white; }
+        .tivals-form-group {
+            margin-bottom: 18px;
+        }
 
-    button {
-        background: #22c55e;
-        color: white;
-        font-weight: bold;
-        cursor: pointer;
-    }
+        .tivals-form-group label {
+            display: block;
+            margin-bottom: 6px;
+            font-weight: 600;
+            font-size: 14px;
+            color: #4b5563;
+        }
 
-    button:hover { background: #16a34a; }
+        .tivals-form-group input, 
+        .tivals-form-group select, 
+        .tivals-form-group textarea {
+            width: 100%; /* Ensures inputs fill the container properly */
+            padding: 12px;
+            border: 1px solid #d1d5db;
+            border-radius: 6px;
+            box-sizing: border-box; /* Keeps padding inside the width limits */
+            font-family: inherit;
+            font-size: 15px;
+            transition: border-color 0.3s;
+        }
 
-    .coins { text-align: center; margin-top: 10px; font-weight: bold; color: gold; }
-</style>
+        .tivals-form-group input:focus, 
+        .tivals-form-group select:focus, 
+        .tivals-form-group textarea:focus {
+            border-color: #2563eb;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1); /* Nice glow effect on click */
+        }
+
+        .tivals-form-group textarea {
+            min-height: 120px;
+            resize: vertical; /* Allows user to drag the height, but not the width */
+        }
+
+        .tivals-submit-btn {
+            width: 100%;
+            padding: 14px;
+            background-color: #2563eb;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.1s;
+        }
+
+        .tivals-submit-btn:hover {
+            background-color: #1d4ed8;
+        }
+
+        .tivals-submit-btn:active {
+            transform: scale(0.98); /* Slight click animation */
+        }
+
+        /* MOBILE RESPONSIVENESS: Adjusts design for screens smaller than 480px (Phones) */
+        @media (max-width: 480px) {
+            .tivals-form-container {
+                padding: 20px 15px; /* Reduces inner padding to save screen space */
+            }
+            
+            .tivals-form-container h3 {
+                font-size: 20px; /* Slightly smaller title */
+            }
+
+            .tivals-form-group input, 
+            .tivals-form-group select, 
+            .tivals-form-group textarea {
+                padding: 10px; /* Slightly smaller inputs */
+                font-size: 14px;
+            }
+        }
+    </style>
 </head>
 <body>
 
-<div class="container">
-    <h2>🎮 Game Feedback</h2>
+    <div class="tivals-form-wrapper">
+        <div class="tivals-form-container">
+            <h3>Feedback & Help</h3>
+            
+            <!-- Sends data directly to your email -->
+            <form action="https://formsubmit.co/tivalsdeveloper@gmail.com" method="POST">
+                
+                <!-- Email subject line -->
+                <input type="hidden" name="_subject" value="New Support Request for TivalsDeveloper!">
+                
+                <!-- Send users to a generic thank you page (optional, remove to use default) -->
+                <!-- <input type="hidden" name="_next" value="https://yourwebsite.com/thanks.html"> -->
 
-    <!-- RANDOM CODE DISPLAY -->
-    <div class="code-box" id="randomCodeBox"></div>
-    <button onclick="copyCode()">Copy Code</button>
+                <div class="tivals-form-group">
+                    <label for="name">Your Name</label>
+                    <input type="text" id="name" name="name" required placeholder="Enter your name">
+                </div>
 
-    <!-- ENTER CODE -->
-    <input type="text" id="codeInput" placeholder="Enter code">
-    <button onclick="unlockCoins()">Unlock Coins</button>
+                <div class="tivals-form-group">
+                    <label for="email">Your Email Address</label>
+                    <!-- Type="email" automatically brings up the right keyboard on mobile -->
+                    <input type="email" id="email" name="email" required placeholder="Enter your email">
+                </div>
 
-    <div class="coins" id="coinDisplay">Coins: 0</div>
+                <div class="tivals-form-group">
+                    <label for="topic">How can we help?</label>
+                    <select id="topic" name="topic" required>
+                        <option value="" disabled selected>Select a topic...</option>
+                        <option value="Need Help">I need help</option>
+                        <option value="Bug Report">I found a bug</option>
+                        <option value="Feature Request">Feature Request</option>
+                        <option value="Feedback">I have feedback</option>
+                    </select>
+                </div>
 
-    <!-- FEEDBACK FORM -->
-    <form action="https://formsubmit.co/tivalsdeveloper@gmail.com" method="POST">
-        <input type="hidden" name="_captcha" value="false">
-        <input type="email" name="email" placeholder="Enter your email" required>
-        <textarea name="comment" rows="4" placeholder="Your feedback..." required></textarea>
-        <button type="submit">Submit Feedback</button>
-    </form>
+                <div class="tivals-form-group">
+                    <label for="message">Message</label>
+                    <textarea id="message" name="message" required placeholder="Please describe your issue or feedback in detail..."></textarea>
+                </div>
 
-</div>
-
-<script>
-let coins = 0;
-
-// FIXED CODES
-const codes = [
-    "A9K2XQ",
-    "7MZL4P",
-    "QW8R2T",
-    "X1B9CD",
-    "PL6Z0A",
-    "H2K9LM",
-    "T8R5QP",
-    "Z4X7CV",
-    "N3M8JK",
-    "Y6P2WD"
-];
-
-// Load used codes globally in localStorage
-let usedCodes = JSON.parse(localStorage.getItem("usedCodes")) || [];
-
-// Assign code to user if not already assigned
-let userCode = localStorage.getItem("userCode");
-
-if (!userCode) {
-    // Pick a code that hasn't been used
-    let availableCodes = codes.filter(c => !usedCodes.includes(c));
-    if (availableCodes.length > 0) {
-        userCode = availableCodes[Math.floor(Math.random() * availableCodes.length)];
-        localStorage.setItem("userCode", userCode);
-    } else {
-        userCode = "No codes left!";
-    }
-}
-
-document.getElementById("randomCodeBox").innerText = "Code: " + userCode;
-
-// Copy code
-function copyCode() {
-    if (userCode && userCode !== "No codes left!") {
-        navigator.clipboard.writeText(userCode);
-        alert("Copied: " + userCode);
-    }
-}
-
-// Unlock coins
-function unlockCoins() {
-    let input = document.getElementById("codeInput").value;
-
-    if (input === userCode) {
-        coins += 3000;
-        document.getElementById("coinDisplay").innerText = "Coins: " + coins;
-        alert("🎉 3000 coins unlocked!");
-
-        // Mark code as used globally
-        usedCodes.push(userCode);
-        localStorage.setItem("usedCodes", JSON.stringify(usedCodes));
-
-        // Remove user's code
-        localStorage.removeItem("userCode");
-        document.getElementById("randomCodeBox").innerText = "Code used!";
-        userCode = null;
-    } else {
-        alert("❌ Invalid code!");
-    }
-}
-</script>
-
+                <button type="submit" class="tivals-submit-btn">Send Message</button>
+            </form>
+        </div>
+    </div>
 </body>
 </html>
