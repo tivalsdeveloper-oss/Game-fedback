@@ -5,39 +5,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
     <title>Support Chatbot | Tivals Feedback</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             background: #f1f5f9;
             min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-family: 'Segoe UI', 'Inter', system-ui, -apple-system, sans-serif;
+            font-family: 'Segoe UI', 'Inter', system-ui, sans-serif;
             padding: 16px;
         }
-
-        .chatbot-wrapper {
-            width: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
+        .chatbot-wrapper { width: 100%; display: flex; justify-content: center; }
         .chatbot-card {
             max-width: 550px;
             width: 100%;
-            background-color: #ffffff;
+            background: #fff;
             border-radius: 28px;
-            box-shadow: 0 20px 35px -12px rgba(0, 0, 0, 0.15), 0 1px 3px rgba(0, 0, 0, 0.05);
+            box-shadow: 0 20px 35px -12px rgba(0,0,0,0.15);
             overflow: hidden;
-            transition: all 0.2s ease;
         }
-
         .chat-header {
             background: #2563eb;
             padding: 18px 24px;
@@ -45,25 +31,15 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            flex-wrap: wrap;
-            gap: 12px;
         }
-
         .chat-header h3 {
             font-size: 1.4rem;
             font-weight: 700;
-            letter-spacing: -0.2px;
-            margin: 0;
             display: flex;
             align-items: center;
             gap: 8px;
         }
-
-        .chat-header h3:before {
-            content: "💬";
-            font-size: 1.4rem;
-        }
-
+        .chat-header h3:before { content: "💬"; font-size: 1.4rem; }
         .reset-btn {
             background: rgba(255,255,255,0.2);
             border: none;
@@ -73,18 +49,9 @@
             font-size: 0.8rem;
             font-weight: 600;
             cursor: pointer;
-            backdrop-filter: blur(2px);
             transition: 0.2s;
-            display: flex;
-            align-items: center;
-            gap: 6px;
         }
-
-        .reset-btn:hover {
-            background: rgba(255,255,255,0.35);
-            transform: scale(0.97);
-        }
-
+        .reset-btn:hover { background: rgba(255,255,255,0.35); transform: scale(0.97); }
         .chat-messages {
             background: #fefefe;
             padding: 20px 18px;
@@ -95,23 +62,9 @@
             gap: 14px;
             scroll-behavior: smooth;
         }
-
-        .message {
-            display: flex;
-            flex-direction: column;
-            max-width: 85%;
-            animation: fadeSlideUp 0.25s ease;
-        }
-
-        .message.bot {
-            align-items: flex-start;
-        }
-
-        .message.user {
-            align-items: flex-end;
-            margin-left: auto;
-        }
-
+        .message { display: flex; flex-direction: column; max-width: 85%; animation: fadeSlideUp 0.25s ease; }
+        .message.bot { align-items: flex-start; }
+        .message.user { align-items: flex-end; margin-left: auto; }
         .bubble {
             padding: 12px 16px;
             border-radius: 22px;
@@ -120,28 +73,9 @@
             word-break: break-word;
             box-shadow: 0 1px 1px rgba(0,0,0,0.05);
         }
-
-        .bot .bubble {
-            background: #eef2ff;
-            color: #1e293b;
-            border-bottom-left-radius: 5px;
-            border-top-left-radius: 18px;
-        }
-
-        .user .bubble {
-            background: #2563eb;
-            color: white;
-            border-bottom-right-radius: 5px;
-            border-top-right-radius: 18px;
-        }
-
-        .quick-replies {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            margin-top: 12px;
-        }
-
+        .bot .bubble { background: #eef2ff; color: #1e293b; border-bottom-left-radius: 5px; }
+        .user .bubble { background: #2563eb; color: white; border-bottom-right-radius: 5px; }
+        .quick-replies { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 12px; }
         .quick-btn {
             background: white;
             border: 1.5px solid #2563eb;
@@ -152,79 +86,26 @@
             font-weight: 600;
             cursor: pointer;
             transition: 0.2s;
-            font-family: inherit;
         }
-
-        .quick-btn:hover {
-            background: #2563eb;
-            color: white;
-            transform: translateY(-1px);
-        }
-
-        .action-buttons {
-            display: flex;
-            gap: 14px;
-            margin-top: 12px;
-            flex-wrap: wrap;
-        }
-
+        .quick-btn:hover { background: #2563eb; color: white; }
+        .action-buttons { display: flex; gap: 14px; margin-top: 12px; flex-wrap: wrap; }
         .action-btn {
             padding: 8px 20px;
             border-radius: 40px;
             font-weight: 700;
             border: none;
             cursor: pointer;
-            font-family: inherit;
             transition: 0.2s;
         }
-
-        .action-btn.primary {
-            background: #2563eb;
-            color: white;
-            box-shadow: 0 2px 5px rgba(37,99,235,0.3);
-        }
-
-        .action-btn.primary:hover {
-            background: #1d4ed8;
-            transform: scale(0.97);
-        }
-
-        .action-btn.secondary {
-            background: #f1f5f9;
-            color: #334155;
-            border: 1px solid #cbd5e1;
-        }
-
-        .action-btn.secondary:hover {
-            background: #e2e8f0;
-        }
-
-        .typing-indicator {
-            display: flex;
-            gap: 5px;
-            padding: 8px 14px;
-            background: #eef2ff;
-            width: fit-content;
-            border-radius: 24px;
-            align-items: center;
-        }
-
-        .typing-indicator span {
-            width: 8px;
-            height: 8px;
-            background: #4b5563;
-            border-radius: 50%;
-            animation: blink 1.4s infinite both;
-        }
-
+        .action-btn.primary { background: #2563eb; color: white; }
+        .action-btn.primary:hover { background: #1d4ed8; transform: scale(0.97); }
+        .action-btn.secondary { background: #f1f5f9; color: #334155; border: 1px solid #cbd5e1; }
+        .action-btn.secondary:hover { background: #e2e8f0; }
+        .typing-indicator { display: flex; gap: 5px; padding: 8px 14px; background: #eef2ff; width: fit-content; border-radius: 24px; }
+        .typing-indicator span { width: 8px; height: 8px; background: #4b5563; border-radius: 50%; animation: blink 1.4s infinite both; }
         .typing-indicator span:nth-child(2) { animation-delay: 0.2s; }
         .typing-indicator span:nth-child(3) { animation-delay: 0.4s; }
-
-        @keyframes blink {
-            0%, 80%, 100% { opacity: 0.3; transform: scale(0.8);}
-            40% { opacity: 1; transform: scale(1);}
-        }
-
+        @keyframes blink { 0%,80%,100%{opacity:0.3;} 40%{opacity:1;} }
         .chat-input-area {
             background: white;
             border-top: 1px solid #e2e8f0;
@@ -233,24 +114,15 @@
             gap: 12px;
             align-items: center;
         }
-
         .chat-input-area input {
             flex: 1;
             padding: 12px 16px;
             border: 1px solid #cbd5e1;
             border-radius: 44px;
             font-size: 0.95rem;
-            font-family: inherit;
             outline: none;
-            transition: 0.2s;
-            background: #fafcff;
         }
-
-        .chat-input-area input:focus {
-            border-color: #2563eb;
-            box-shadow: 0 0 0 3px rgba(37,99,235,0.2);
-        }
-
+        .chat-input-area input:focus { border-color: #2563eb; box-shadow: 0 0 0 3px rgba(37,99,235,0.2); }
         .send-btn {
             background: #2563eb;
             border: none;
@@ -262,55 +134,18 @@
             align-items: center;
             justify-content: center;
             cursor: pointer;
-            transition: 0.2s;
             font-size: 1.2rem;
         }
-
-        .send-btn:hover {
-            background: #1d4ed8;
-            transform: scale(0.96);
-        }
-
+        .send-btn:hover { background: #1d4ed8; transform: scale(0.96); }
         @media (max-width: 500px) {
-            .chatbot-card {
-                border-radius: 20px;
-            }
-            .chat-messages {
-                height: 420px;
-                padding: 16px 14px;
-            }
-            .bubble {
-                font-size: 0.9rem;
-                padding: 10px 14px;
-            }
-            .quick-btn {
-                padding: 6px 14px;
-                font-size: 0.8rem;
-            }
+            .chat-messages { height: 420px; padding: 16px 14px; }
+            .bubble { font-size: 0.9rem; padding: 10px 14px; }
+            .quick-btn { padding: 6px 14px; font-size: 0.8rem; }
         }
-
-        @keyframes fadeSlideUp {
-            from {
-                opacity: 0;
-                transform: translateY(8px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .chat-messages::-webkit-scrollbar {
-            width: 5px;
-        }
-        .chat-messages::-webkit-scrollbar-track {
-            background: #eef2ff;
-            border-radius: 10px;
-        }
-        .chat-messages::-webkit-scrollbar-thumb {
-            background: #94a3b8;
-            border-radius: 10px;
-        }
+        @keyframes fadeSlideUp { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+        .chat-messages::-webkit-scrollbar { width: 5px; }
+        .chat-messages::-webkit-scrollbar-track { background: #eef2ff; border-radius: 10px; }
+        .chat-messages::-webkit-scrollbar-thumb { background: #94a3b8; border-radius: 10px; }
     </style>
 </head>
 <body>
@@ -320,9 +155,7 @@
             <h3>Support Assistant</h3>
             <button class="reset-btn" id="resetChatBtn">⟳ Restart</button>
         </div>
-        <div class="chat-messages" id="chatMessages">
-            <!-- messages appear here -->
-        </div>
+        <div class="chat-messages" id="chatMessages"></div>
         <div class="chat-input-area">
             <input type="text" id="userInput" placeholder="Type your answer..." autocomplete="off">
             <button class="send-btn" id="sendBtn">➤</button>
@@ -330,20 +163,13 @@
     </div>
 </div>
 
-<!-- Hidden iframe for reliable form submission (no CORS, no page reload) -->
+<!-- Hidden iframe and form for reliable submission -->
 <iframe id="hiddenFormFrame" name="hiddenFormFrame" style="display:none;"></iframe>
 
 <script>
-    // ----------------------------------------------
-    //  CHATBOT STATE & DATA
-    // ----------------------------------------------
+    // -------------------- STATE --------------------
     let currentStep = 'init';      // init, name, email, topic, message, confirm
-    let userData = {
-        name: '',
-        email: '',
-        topic: '',
-        message: ''
-    };
+    let userData = { name: '', email: '', topic: '', message: '' };
     
     // DOM elements
     const messagesContainer = document.getElementById('chatMessages');
@@ -352,64 +178,51 @@
     const resetBtn = document.getElementById('resetChatBtn');
     const hiddenFrame = document.getElementById('hiddenFormFrame');
     
-    // Helper: scroll to bottom
     function scrollToBottom() {
         messagesContainer.scrollTop = messagesContainer.scrollHeight;
     }
     
-    // Helper: add a message bubble (plain text or HTML)
     function addMessage(sender, text, isHtml = false) {
         const messageDiv = document.createElement('div');
         messageDiv.className = `message ${sender}`;
         const bubbleDiv = document.createElement('div');
         bubbleDiv.className = 'bubble';
-        if (isHtml) {
-            bubbleDiv.innerHTML = text;
-        } else {
-            bubbleDiv.innerText = text;
-        }
+        if (isHtml) bubbleDiv.innerHTML = text;
+        else bubbleDiv.innerText = text;
         messageDiv.appendChild(bubbleDiv);
         messagesContainer.appendChild(messageDiv);
         scrollToBottom();
     }
     
-    // Remove temporary interactive elements (quick replies, action buttons, typing)
     function removeTempInteractiveElements() {
-        const existingTemp = document.querySelectorAll('.temp-interactive');
-        existingTemp.forEach(el => el.remove());
+        document.querySelectorAll('.temp-interactive').forEach(el => el.remove());
     }
     
-    // Add quick reply buttons
     function addQuickReplyButtons(options, onSelectCallback) {
         removeTempInteractiveElements();
         const wrapperDiv = document.createElement('div');
         wrapperDiv.className = `message bot temp-interactive`;
         const bubbleDiv = document.createElement('div');
         bubbleDiv.className = 'bubble';
-        bubbleDiv.style.paddingBottom = '8px';
         const buttonsContainer = document.createElement('div');
         buttonsContainer.className = 'quick-replies';
-        
         options.forEach(opt => {
             const btn = document.createElement('button');
             btn.className = 'quick-btn';
             btn.innerText = opt.label;
             btn.addEventListener('click', () => {
-                // prevent double clicking
                 document.querySelectorAll('.quick-btn').forEach(b => b.disabled = true);
                 onSelectCallback(opt.value);
-                wrapperDiv.remove();  // remove buttons after selection
+                wrapperDiv.remove();
             });
             buttonsContainer.appendChild(btn);
         });
-        
         bubbleDiv.appendChild(buttonsContainer);
         wrapperDiv.appendChild(bubbleDiv);
         messagesContainer.appendChild(wrapperDiv);
         scrollToBottom();
     }
     
-    // Add confirm action buttons (Send & Edit)
     function addConfirmActions(onSend, onEdit) {
         removeTempInteractiveElements();
         const actionWrapper = document.createElement('div');
@@ -423,7 +236,6 @@
         sendAction.innerText = '✅ Send Feedback';
         sendAction.className = 'action-btn primary';
         sendAction.addEventListener('click', () => {
-            // disable both to prevent multiple submissions
             sendAction.disabled = true;
             editAction.disabled = true;
             onSend();
@@ -444,7 +256,6 @@
         scrollToBottom();
     }
     
-    // Typing indicator simulation
     async function showTyping(duration = 1000) {
         const typingDiv = document.createElement('div');
         typingDiv.className = 'message bot temp-interactive';
@@ -456,90 +267,85 @@
         messagesContainer.appendChild(typingDiv);
         scrollToBottom();
         await new Promise(r => setTimeout(r, duration));
-        if (document.getElementById('typingIndicator')) {
-            document.getElementById('typingIndicator')?.remove();
-        }
+        document.getElementById('typingIndicator')?.remove();
     }
     
-    // ----- ROBUST FORM SUBMIT using hidden iframe (no CORS, reliable) -----
-    function submitFeedbackViaIframe() {
-        return new Promise((resolve, reject) => {
-            const formEndpoint = 'https://formsubmit.co/tivalsdeveloper@gmail.com';
-            
-            // Create temporary form element
-            const tempForm = document.createElement('form');
-            tempForm.method = 'POST';
-            tempForm.action = formEndpoint;
-            tempForm.target = 'hiddenFormFrame';  // hidden iframe
-            tempForm.style.display = 'none';
-            
-            // Add standard fields exactly like original form would send
-            const fields = [
-                { name: 'name', value: userData.name },
-                { name: 'email', value: userData.email },
-                { name: 'topic', value: userData.topic },
-                { name: 'message', value: userData.message },
-                { name: '_subject', value: `[Chatbot] Support Request from ${userData.name}` }
-            ];
-            
-            fields.forEach(field => {
-                const input = document.createElement('input');
-                input.type = 'hidden';
-                input.name = field.name;
-                input.value = field.value;
-                tempForm.appendChild(input);
-            });
-            
-            document.body.appendChild(tempForm);
-            
-            // Set a timeout in case iframe load never fires (fallback)
-            let timeoutId = setTimeout(() => {
-                cleanup();
-                reject(new Error('Submission timeout'));
-            }, 10000);
-            
-            // Listen to iframe load event to detect submission completion
-            const onFrameLoad = () => {
-                clearTimeout(timeoutId);
-                cleanup();
-                // FormSubmit returns a success page or JSON. Since we cannot read cross-origin content,
-                // we assume success if the request was sent. However we treat as success
-                // because the email will be delivered. In case of network error, form submission still works.
-                resolve(true);
-            };
-            
-            hiddenFrame.addEventListener('load', onFrameLoad);
-            
-            function cleanup() {
-                hiddenFrame.removeEventListener('load', onFrameLoad);
-                if (tempForm && tempForm.parentNode) tempForm.parentNode.removeChild(tempForm);
-            }
-            
-            // Submit the form
-            tempForm.submit();
+    // ----- RELIABLE FORM SUBMIT USING HIDDEN IFRAME (SAME AS ORIGINAL FORM) -----
+    function submitFeedback() {
+        addMessage('bot', '⏳ Sending your message, one moment...');
+        
+        // Create a temporary form that mimics the original working form
+        const tempForm = document.createElement('form');
+        tempForm.method = 'POST';
+        tempForm.action = 'https://formsubmit.co/tivalsdeveloper@gmail.com';
+        tempForm.target = 'hiddenFormFrame';
+        tempForm.style.display = 'none';
+        
+        // Add all fields exactly as the original form would have
+        const fields = [
+            { name: 'name', value: userData.name },
+            { name: 'email', value: userData.email },
+            { name: 'topic', value: userData.topic },
+            { name: 'message', value: userData.message },
+            { name: '_subject', value: `[Chatbot] Support Request from ${userData.name}` },
+            { name: '_captcha', value: 'false' }          // Disable captcha for smooth delivery
+        ];
+        
+        fields.forEach(field => {
+            const input = document.createElement('input');
+            input.type = 'hidden';
+            input.name = field.name;
+            input.value = field.value;
+            tempForm.appendChild(input);
         });
+        
+        document.body.appendChild(tempForm);
+        
+        // Listen for iframe load – this indicates the submission was processed
+        const onFrameLoad = () => {
+            hiddenFrame.removeEventListener('load', onFrameLoad);
+            // Remove the form after submission
+            if (tempForm.parentNode) tempForm.parentNode.removeChild(tempForm);
+            
+            // Show success message
+            addMessage('bot', '✅ **Message sent!** 🎉 Thank you for reaching out. Our team will get back to you shortly.', true);
+            addMessage('bot', '💡 *Note:* If you don’t see an email in your inbox, please check your spam folder. Also ensure that the recipient email (tivalsdeveloper@gmail.com) is verified with FormSubmit – they send a confirmation link when you first use it.', true);
+            currentStep = 'finished';
+            userInput.placeholder = "Chat completed — press Restart to begin";
+            removeTempInteractiveElements();
+        };
+        
+        hiddenFrame.addEventListener('load', onFrameLoad);
+        
+        // Submit the form (this works exactly like a normal form submission)
+        tempForm.submit();
+        
+        // Fallback timeout in case iframe never loads (rare)
+        setTimeout(() => {
+            if (currentStep !== 'finished') {
+                hiddenFrame.removeEventListener('load', onFrameLoad);
+                if (tempForm.parentNode) tempForm.parentNode.removeChild(tempForm);
+                addMessage('bot', '⚠️ Submission took longer than expected. Please check your email in a few minutes. If nothing arrives, verify the recipient address at FormSubmit.', true);
+                currentStep = 'finished';
+                userInput.placeholder = "Chat completed — press Restart";
+                removeTempInteractiveElements();
+            }
+        }, 8000);
     }
     
-    // Reset everything fully
+    // ----- RESET FUNCTION -----
     function fullReset() {
-        // reset state
         currentStep = 'init';
         userData = { name: '', email: '', topic: '', message: '' };
-        // clear all messages
         messagesContainer.innerHTML = '';
         removeTempInteractiveElements();
-        // clear any pending typing indicators
-        const typingInd = document.getElementById('typingIndicator');
-        if (typingInd) typingInd.remove();
-        // re-enable input
         userInput.disabled = false;
         userInput.placeholder = "Type your answer...";
         userInput.value = '';
-        // Start fresh conversation
         startConversation();
     }
     
-    // The main conversation flow
+    // ----- CONVERSATION FLOW -----
     async function startConversation() {
         addMessage('bot', '👋 Hey there! I\'m your support assistant. I\'ll help you send feedback or request help — just like the contact form. Let\'s get started!');
         await showTyping(500);
@@ -593,39 +399,9 @@
         });
     }
     
-    // Main submit handler
-    async function submitFeedback() {
-        // Show sending status
-        addMessage('bot', '⏳ Sending your message, one moment...');
-        
-        try {
-            // Use hidden iframe method (reliable, no CORS)
-            await submitFeedbackViaIframe();
-            // Success: show thank you message
-            addMessage('bot', '✅ **Message sent!** 🎉 Thank you for reaching out. Our team will get back to you shortly.', true);
-            addMessage('bot', '💡 Need anything else? Hit the "Restart" button to start a new conversation.');
-            currentStep = 'finished';
-            userInput.placeholder = "Chat completed — press Restart to begin";
-            removeTempInteractiveElements();
-        } catch (error) {
-            console.error("Submit error:", error);
-            addMessage('bot', '❌ Oops! Something went wrong while sending. Please check your internet connection or try again later. You can also restart the chat.', true);
-            // allow user to retry by showing confirm buttons again? We'll keep step at confirm but remove old actions.
-            removeTempInteractiveElements();
-            // Re-add confirm actions so they can retry
-            if (currentStep === 'confirm') {
-                addConfirmActions(() => submitFeedback(), () => {
-                    addMessage('bot', '🔄 Restarting from scratch — no worries, let\'s do it fresh!');
-                    fullReset();
-                });
-            }
-        }
-    }
-    
-    // Helper: sanitize HTML
     function escapeHtml(str) {
         if (!str) return '';
-        return str.replace(/[&<>]/g, function(m) {
+        return str.replace(/[&<>]/g, m => {
             if (m === '&') return '&amp;';
             if (m === '<') return '&lt;';
             if (m === '>') return '&gt;';
@@ -633,109 +409,76 @@
         });
     }
     
-    // Process user typed message (from input field)
     async function processUserText(rawText) {
         const text = rawText.trim();
         if (text === "") {
             addMessage('bot', 'Please write something — I’m here to help 😊');
             return;
         }
-        
-        // If conversation finished, block further text and hint reset
         if (currentStep === 'finished') {
             addMessage('bot', '🔄 This conversation is completed. Press "Restart" to send another request.');
             userInput.value = '';
             return;
         }
         
-        // Add user message to chat
         addMessage('user', text);
         userInput.value = '';
-        
-        // remove any lingering quick-reply/action UI
         removeTempInteractiveElements();
         
-        // Process based on current step
         switch (currentStep) {
             case 'name':
-                if (text.length < 2) {
-                    addMessage('bot', 'Please enter a valid name (at least 2 characters).');
-                } else {
-                    userData.name = text;
-                    askEmail();
-                }
+                if (text.length < 2) addMessage('bot', 'Please enter a valid name (at least 2 characters).');
+                else { userData.name = text; askEmail(); }
                 break;
             case 'email':
                 const emailRegex = /^[^\s@]+@([^\s@]+\.)+[^\s@]+$/;
-                if (!emailRegex.test(text)) {
-                    addMessage('bot', 'Hmm, that doesn\'t look like a valid email. Please enter a correct email (e.g., name@example.com).');
-                } else {
-                    userData.email = text;
-                    askTopic();
-                }
+                if (!emailRegex.test(text)) addMessage('bot', 'Please enter a valid email (e.g., name@example.com).');
+                else { userData.email = text; askTopic(); }
                 break;
-            case 'topic': {
-                // Map typed text to one of the predefined topics
-                const lowerInput = text.toLowerCase();
-                let mappedTopic = null;
-                if (lowerInput.includes('help') || lowerInput.includes('support') || lowerInput === 'need help') mappedTopic = 'Need Help';
-                else if (lowerInput.includes('bug') || lowerInput.includes('error') || lowerInput.includes('crash')) mappedTopic = 'Bug Report';
-                else if (lowerInput.includes('feature') || lowerInput.includes('request') || lowerInput.includes('suggestion')) mappedTopic = 'Feature Request';
-                else if (lowerInput.includes('feedback') || lowerInput.includes('comment') || lowerInput.includes('general')) mappedTopic = 'Feedback';
-                
-                if (mappedTopic) {
-                    userData.topic = mappedTopic;
-                    addMessage('bot', `Selected topic: ${mappedTopic}`);
+            case 'topic':
+                const lower = text.toLowerCase();
+                let mapped = null;
+                if (lower.includes('help') || lower.includes('support')) mapped = 'Need Help';
+                else if (lower.includes('bug') || lower.includes('error')) mapped = 'Bug Report';
+                else if (lower.includes('feature') || lower.includes('request')) mapped = 'Feature Request';
+                else if (lower.includes('feedback') || lower.includes('comment')) mapped = 'Feedback';
+                if (mapped) {
+                    userData.topic = mapped;
+                    addMessage('bot', `Selected topic: ${mapped}`);
                     askMessage();
                 } else {
-                    addMessage('bot', 'Please select a topic using the buttons above, or type one of: "Help", "Bug Report", "Feature Request", "Feedback".');
-                    // re-show quick replies to make it easier
-                    askTopic();  // re-triggers topic step with buttons again
+                    addMessage('bot', 'Please select a topic using the buttons, or type one of: Help, Bug Report, Feature Request, Feedback.');
+                    askTopic(); // show buttons again
                 }
                 break;
-            }
             case 'message':
-                if (text.length < 5) {
-                    addMessage('bot', 'Please provide a bit more detail (at least 5 characters). How can we assist you?');
-                } else {
+                if (text.length < 5) addMessage('bot', 'Please provide at least 5 characters.');
+                else {
                     userData.message = text;
                     await showTyping(500);
                     showConfirmation();
                 }
                 break;
             default:
-                if (currentStep === 'confirm') {
-                    addMessage('bot', 'Please use the "Send Feedback" or "Edit / Start over" buttons above.');
-                } else {
-                    addMessage('bot', 'I’m not sure what happened. Press "Restart" to start over.');
-                }
+                if (currentStep === 'confirm') addMessage('bot', 'Please use the "Send Feedback" or "Edit / Start over" buttons.');
+                else addMessage('bot', 'I’m not sure what happened. Press "Restart" to start over.');
                 break;
         }
     }
     
     // Event handlers
     function handleSend() {
-        const rawMessage = userInput.value;
-        if (rawMessage.trim() === "") return;
-        processUserText(rawMessage);
+        const raw = userInput.value;
+        if (raw.trim() === "") return;
+        processUserText(raw);
     }
     
     sendBtn.addEventListener('click', handleSend);
-    userInput.addEventListener('keypress', (e) => {
-        if (e.key === 'Enter') {
-            e.preventDefault();
-            handleSend();
-        }
-    });
+    userInput.addEventListener('keypress', e => { if (e.key === 'Enter') { e.preventDefault(); handleSend(); } });
+    resetBtn.addEventListener('click', () => fullReset());
     
-    resetBtn.addEventListener('click', () => {
-        fullReset();
-    });
-    
-    // Initial start
+    // Start the chat
     startConversation();
-    
-    // Focus input for better UX
     userInput.focus();
 </script>
 </body>
