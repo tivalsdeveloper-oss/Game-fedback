@@ -3,9 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>Support Chatbot | Tivals Feedback</title>
+    <title>Support Chatbot + Premium Code</title>
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         body {
             background: #f1f5f9;
             min-height: 100vh;
@@ -15,15 +20,22 @@
             font-family: 'Segoe UI', 'Inter', system-ui, sans-serif;
             padding: 16px;
         }
-        .chatbot-wrapper { width: 100%; display: flex; justify-content: center; }
+
+        .chatbot-wrapper {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+        }
+
         .chatbot-card {
             max-width: 550px;
             width: 100%;
-            background: #fff;
+            background: white;
             border-radius: 28px;
-            box-shadow: 0 20px 35px -12px rgba(0,0,0,0.15);
+            box-shadow: 0 20px 35px -12px rgba(0, 0, 0, 0.15);
             overflow: hidden;
         }
+
         .chat-header {
             background: #2563eb;
             padding: 18px 24px;
@@ -32,6 +44,7 @@
             justify-content: space-between;
             align-items: center;
         }
+
         .chat-header h3 {
             font-size: 1.4rem;
             font-weight: 700;
@@ -39,19 +52,26 @@
             align-items: center;
             gap: 8px;
         }
-        .chat-header h3:before { content: "💬"; font-size: 1.4rem; }
+
+        .chat-header h3:before {
+            content: "💬";
+        }
+
         .reset-btn {
             background: rgba(255,255,255,0.2);
             border: none;
             color: white;
             padding: 8px 16px;
             border-radius: 40px;
-            font-size: 0.8rem;
             font-weight: 600;
             cursor: pointer;
             transition: 0.2s;
         }
-        .reset-btn:hover { background: rgba(255,255,255,0.35); transform: scale(0.97); }
+
+        .reset-btn:hover {
+            background: rgba(255,255,255,0.35);
+        }
+
         .chat-messages {
             background: #fefefe;
             padding: 20px 18px;
@@ -60,22 +80,45 @@
             display: flex;
             flex-direction: column;
             gap: 14px;
-            scroll-behavior: smooth;
         }
-        .message { display: flex; flex-direction: column; max-width: 85%; animation: fadeSlideUp 0.25s ease; }
+
+        .message {
+            display: flex;
+            flex-direction: column;
+            max-width: 85%;
+            animation: fadeSlideUp 0.25s ease;
+        }
+
         .message.bot { align-items: flex-start; }
         .message.user { align-items: flex-end; margin-left: auto; }
+
         .bubble {
             padding: 12px 16px;
             border-radius: 22px;
             font-size: 0.95rem;
             line-height: 1.4;
             word-break: break-word;
-            box-shadow: 0 1px 1px rgba(0,0,0,0.05);
         }
-        .bot .bubble { background: #eef2ff; color: #1e293b; border-bottom-left-radius: 5px; }
-        .user .bubble { background: #2563eb; color: white; border-bottom-right-radius: 5px; }
-        .quick-replies { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 12px; }
+
+        .bot .bubble {
+            background: #eef2ff;
+            color: #1e293b;
+            border-bottom-left-radius: 5px;
+        }
+
+        .user .bubble {
+            background: #2563eb;
+            color: white;
+            border-bottom-right-radius: 5px;
+        }
+
+        .quick-replies {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 12px;
+        }
+
         .quick-btn {
             background: white;
             border: 1.5px solid #2563eb;
@@ -85,27 +128,75 @@
             font-size: 0.85rem;
             font-weight: 600;
             cursor: pointer;
-            transition: 0.2s;
+            font-family: inherit;
         }
-        .quick-btn:hover { background: #2563eb; color: white; }
-        .action-buttons { display: flex; gap: 14px; margin-top: 12px; flex-wrap: wrap; }
+
+        .quick-btn:hover {
+            background: #2563eb;
+            color: white;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 14px;
+            margin-top: 12px;
+            flex-wrap: wrap;
+        }
+
         .action-btn {
             padding: 8px 20px;
             border-radius: 40px;
             font-weight: 700;
             border: none;
             cursor: pointer;
-            transition: 0.2s;
+            font-family: inherit;
         }
-        .action-btn.primary { background: #2563eb; color: white; }
-        .action-btn.primary:hover { background: #1d4ed8; transform: scale(0.97); }
-        .action-btn.secondary { background: #f1f5f9; color: #334155; border: 1px solid #cbd5e1; }
-        .action-btn.secondary:hover { background: #e2e8f0; }
-        .typing-indicator { display: flex; gap: 5px; padding: 8px 14px; background: #eef2ff; width: fit-content; border-radius: 24px; }
-        .typing-indicator span { width: 8px; height: 8px; background: #4b5563; border-radius: 50%; animation: blink 1.4s infinite both; }
+
+        .action-btn.primary {
+            background: #2563eb;
+            color: white;
+        }
+
+        .action-btn.primary:hover {
+            background: #1d4ed8;
+        }
+
+        .action-btn.secondary {
+            background: #f1f5f9;
+            color: #334155;
+            border: 1px solid #cbd5e1;
+        }
+
+        .typing-indicator {
+            display: flex;
+            gap: 5px;
+            padding: 8px 14px;
+            background: #eef2ff;
+            width: fit-content;
+            border-radius: 24px;
+        }
+
+        .typing-indicator span {
+            width: 8px;
+            height: 8px;
+            background: #4b5563;
+            border-radius: 50%;
+            animation: blink 1.4s infinite both;
+        }
+
         .typing-indicator span:nth-child(2) { animation-delay: 0.2s; }
         .typing-indicator span:nth-child(3) { animation-delay: 0.4s; }
-        @keyframes blink { 0%,80%,100%{opacity:0.3;} 40%{opacity:1;} }
+
+        @keyframes blink {
+            0%, 80%, 100% { opacity: 0.3; transform: scale(0.8);}
+            40% { opacity: 1; transform: scale(1);}
+        }
+
+        @keyframes fadeSlideUp {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
         .chat-input-area {
             background: white;
             border-top: 1px solid #e2e8f0;
@@ -114,15 +205,23 @@
             gap: 12px;
             align-items: center;
         }
+
         .chat-input-area input {
             flex: 1;
             padding: 12px 16px;
             border: 1px solid #cbd5e1;
             border-radius: 44px;
             font-size: 0.95rem;
+            font-family: inherit;
             outline: none;
+            background: #fafcff;
         }
-        .chat-input-area input:focus { border-color: #2563eb; box-shadow: 0 0 0 3px rgba(37,99,235,0.2); }
+
+        .chat-input-area input:focus {
+            border-color: #2563eb;
+            box-shadow: 0 0 0 3px rgba(37,99,235,0.2);
+        }
+
         .send-btn {
             background: #2563eb;
             border: none;
@@ -136,13 +235,48 @@
             cursor: pointer;
             font-size: 1.2rem;
         }
-        .send-btn:hover { background: #1d4ed8; transform: scale(0.96); }
+
+        .send-btn:hover {
+            background: #1d4ed8;
+        }
+
+        /* Premium button styling */
+        .premium-section {
+            padding: 12px 18px;
+            background: #fef9e3;
+            border-top: 1px solid #fde68a;
+            border-bottom: 1px solid #fde68a;
+            text-align: center;
+        }
+
+        .premium-btn {
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+            border: none;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 40px;
+            font-weight: bold;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 2px 5px rgba(245, 158, 11, 0.3);
+            width: 100%;
+            font-family: inherit;
+        }
+
+        .premium-btn:hover {
+            transform: scale(0.98);
+            background: linear-gradient(135deg, #d97706, #b45309);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
         @media (max-width: 500px) {
-            .chat-messages { height: 420px; padding: 16px 14px; }
+            .chat-messages { height: 380px; padding: 16px 14px; }
             .bubble { font-size: 0.9rem; padding: 10px 14px; }
             .quick-btn { padding: 6px 14px; font-size: 0.8rem; }
+            .premium-btn { padding: 10px 20px; font-size: 0.9rem; }
         }
-        @keyframes fadeSlideUp { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
         .chat-messages::-webkit-scrollbar { width: 5px; }
         .chat-messages::-webkit-scrollbar-track { background: #eef2ff; border-radius: 10px; }
         .chat-messages::-webkit-scrollbar-thumb { background: #94a3b8; border-radius: 10px; }
@@ -156,6 +290,10 @@
             <button class="reset-btn" id="resetChatBtn">⟳ Restart</button>
         </div>
         <div class="chat-messages" id="chatMessages"></div>
+        <!-- Premium Code Button Section -->
+        <div class="premium-section">
+            <button class="premium-btn" id="premiumCodeBtn">✨ GET PREMIUM CODE ✨</button>
+        </div>
         <div class="chat-input-area">
             <input type="text" id="userInput" placeholder="Type your answer..." autocomplete="off">
             <button class="send-btn" id="sendBtn">➤</button>
@@ -163,323 +301,406 @@
     </div>
 </div>
 
-<!-- Hidden iframe and form for reliable submission -->
-<iframe id="hiddenFormFrame" name="hiddenFormFrame" style="display:none;"></iframe>
-
 <script>
-    // -------------------- STATE --------------------
-    let currentStep = 'init';      // init, name, email, topic, message, confirm
-    let userData = { name: '', email: '', topic: '', message: '' };
-    
-    // DOM elements
-    const messagesContainer = document.getElementById('chatMessages');
-    const userInput = document.getElementById('userInput');
-    const sendBtn = document.getElementById('sendBtn');
-    const resetBtn = document.getElementById('resetChatBtn');
-    const hiddenFrame = document.getElementById('hiddenFormFrame');
-    
-    function scrollToBottom() {
-        messagesContainer.scrollTop = messagesContainer.scrollHeight;
-    }
-    
-    function addMessage(sender, text, isHtml = false) {
-        const messageDiv = document.createElement('div');
-        messageDiv.className = `message ${sender}`;
-        const bubbleDiv = document.createElement('div');
-        bubbleDiv.className = 'bubble';
-        if (isHtml) bubbleDiv.innerHTML = text;
-        else bubbleDiv.innerText = text;
-        messageDiv.appendChild(bubbleDiv);
-        messagesContainer.appendChild(messageDiv);
-        scrollToBottom();
-    }
-    
-    function removeTempInteractiveElements() {
-        document.querySelectorAll('.temp-interactive').forEach(el => el.remove());
-    }
-    
-    function addQuickReplyButtons(options, onSelectCallback) {
-        removeTempInteractiveElements();
-        const wrapperDiv = document.createElement('div');
-        wrapperDiv.className = `message bot temp-interactive`;
-        const bubbleDiv = document.createElement('div');
-        bubbleDiv.className = 'bubble';
-        const buttonsContainer = document.createElement('div');
-        buttonsContainer.className = 'quick-replies';
-        options.forEach(opt => {
-            const btn = document.createElement('button');
-            btn.className = 'quick-btn';
-            btn.innerText = opt.label;
-            btn.addEventListener('click', () => {
-                document.querySelectorAll('.quick-btn').forEach(b => b.disabled = true);
-                onSelectCallback(opt.value);
-                wrapperDiv.remove();
-            });
-            buttonsContainer.appendChild(btn);
-        });
-        bubbleDiv.appendChild(buttonsContainer);
-        wrapperDiv.appendChild(bubbleDiv);
-        messagesContainer.appendChild(wrapperDiv);
-        scrollToBottom();
-    }
-    
-    function addConfirmActions(onSend, onEdit) {
-        removeTempInteractiveElements();
-        const actionWrapper = document.createElement('div');
-        actionWrapper.className = `message bot temp-interactive`;
-        const bubbleDiv = document.createElement('div');
-        bubbleDiv.className = 'bubble';
-        const actionsDiv = document.createElement('div');
-        actionsDiv.className = 'action-buttons';
-        
-        const sendAction = document.createElement('button');
-        sendAction.innerText = '✅ Send Feedback';
-        sendAction.className = 'action-btn primary';
-        sendAction.addEventListener('click', () => {
-            sendAction.disabled = true;
-            editAction.disabled = true;
-            onSend();
-        });
-        
-        const editAction = document.createElement('button');
-        editAction.innerText = '✏️ Edit / Start over';
-        editAction.className = 'action-btn secondary';
-        editAction.addEventListener('click', () => {
-            onEdit();
-        });
-        
-        actionsDiv.appendChild(sendAction);
-        actionsDiv.appendChild(editAction);
-        bubbleDiv.appendChild(actionsDiv);
-        actionWrapper.appendChild(bubbleDiv);
-        messagesContainer.appendChild(actionWrapper);
-        scrollToBottom();
-    }
-    
-    async function showTyping(duration = 1000) {
-        const typingDiv = document.createElement('div');
-        typingDiv.className = 'message bot temp-interactive';
-        typingDiv.id = 'typingIndicator';
-        const bubble = document.createElement('div');
-        bubble.className = 'bubble typing-indicator';
-        bubble.innerHTML = '<span></span><span></span><span></span>';
-        typingDiv.appendChild(bubble);
-        messagesContainer.appendChild(typingDiv);
-        scrollToBottom();
-        await new Promise(r => setTimeout(r, duration));
-        document.getElementById('typingIndicator')?.remove();
-    }
-    
-    // ----- RELIABLE FORM SUBMIT USING HIDDEN IFRAME (SAME AS ORIGINAL FORM) -----
-    function submitFeedback() {
-        addMessage('bot', '⏳ Sending your message, one moment...');
-        
-        // Create a temporary form that mimics the original working form
-        const tempForm = document.createElement('form');
-        tempForm.method = 'POST';
-        tempForm.action = 'https://formsubmit.co/tivalsdeveloper@gmail.com';
-        tempForm.target = 'hiddenFormFrame';
-        tempForm.style.display = 'none';
-        
-        // Add all fields exactly as the original form would have
-        const fields = [
-            { name: 'name', value: userData.name },
-            { name: 'email', value: userData.email },
-            { name: 'topic', value: userData.topic },
-            { name: 'message', value: userData.message },
-            { name: '_subject', value: `[Chatbot] Support Request from ${userData.name}` },
-            { name: '_captcha', value: 'false' }          // Disable captcha for smooth delivery
-        ];
-        
-        fields.forEach(field => {
-            const input = document.createElement('input');
-            input.type = 'hidden';
-            input.name = field.name;
-            input.value = field.value;
-            tempForm.appendChild(input);
-        });
-        
-        document.body.appendChild(tempForm);
-        
-        // Listen for iframe load – this indicates the submission was processed
-        const onFrameLoad = () => {
-            hiddenFrame.removeEventListener('load', onFrameLoad);
-            // Remove the form after submission
-            if (tempForm.parentNode) tempForm.parentNode.removeChild(tempForm);
-            
-            // Show success message
-            addMessage('bot', '✅ **Message sent!** 🎉 Thank you for reaching out. Our team will get back to you shortly.', true);
-            addMessage('bot', '💡 *Note:* If you don’t see an email in your inbox, please check your spam folder. Also ensure that the recipient email (tivalsdeveloper@gmail.com) is verified with FormSubmit – they send a confirmation link when you first use it.', true);
-            currentStep = 'finished';
-            userInput.placeholder = "Chat completed — press Restart to begin";
-            removeTempInteractiveElements();
+    (function() {
+        // ---------- STATE ----------
+        let currentStep = 'init';   // init, name, email, topic, message, confirm
+        let userData = {
+            name: '',
+            email: '',
+            topic: '',
+            message: ''
         };
-        
-        hiddenFrame.addEventListener('load', onFrameLoad);
-        
-        // Submit the form (this works exactly like a normal form submission)
-        tempForm.submit();
-        
-        // Fallback timeout in case iframe never loads (rare)
-        setTimeout(() => {
-            if (currentStep !== 'finished') {
-                hiddenFrame.removeEventListener('load', onFrameLoad);
-                if (tempForm.parentNode) tempForm.parentNode.removeChild(tempForm);
-                addMessage('bot', '⚠️ Submission took longer than expected. Please check your email in a few minutes. If nothing arrives, verify the recipient address at FormSubmit.', true);
-                currentStep = 'finished';
-                userInput.placeholder = "Chat completed — press Restart";
-                removeTempInteractiveElements();
+
+        // List of premium codes
+        const premiumCodes = [
+            "A9K2XQ", "7MZL4P", "QW8R2T", "X1B9CD", "PL6Z0A",
+            "H2K9LM", "T8R5QP", "Z4X7CV", "N3M8JK", "Y6P2WD"
+        ];
+
+        // DOM elements
+        const messagesContainer = document.getElementById('chatMessages');
+        const userInput = document.getElementById('userInput');
+        const sendBtn = document.getElementById('sendBtn');
+        const resetBtn = document.getElementById('resetChatBtn');
+        const premiumBtn = document.getElementById('premiumCodeBtn');
+
+        // Helper: scroll to bottom
+        function scrollToBottom() {
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }
+
+        // Add message bubble (text or HTML)
+        function addMessage(sender, text, isHtml = false) {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${sender}`;
+            const bubbleDiv = document.createElement('div');
+            bubbleDiv.className = 'bubble';
+            if (isHtml) {
+                bubbleDiv.innerHTML = text;
+            } else {
+                bubbleDiv.innerText = text;
             }
-        }, 8000);
-    }
-    
-    // ----- RESET FUNCTION -----
-    function fullReset() {
-        currentStep = 'init';
-        userData = { name: '', email: '', topic: '', message: '' };
-        messagesContainer.innerHTML = '';
-        removeTempInteractiveElements();
-        userInput.disabled = false;
-        userInput.placeholder = "Type your answer...";
-        userInput.value = '';
-        startConversation();
-    }
-    
-    // ----- CONVERSATION FLOW -----
-    async function startConversation() {
-        addMessage('bot', '👋 Hey there! I\'m your support assistant. I\'ll help you send feedback or request help — just like the contact form. Let\'s get started!');
-        await showTyping(500);
-        askName();
-    }
-    
-    function askName() {
-        currentStep = 'name';
-        addMessage('bot', 'What\'s your name?');
-    }
-    
-    function askEmail() {
-        currentStep = 'email';
-        addMessage('bot', 'Great! What\'s your email address? (So we can reply)');
-    }
-    
-    function askTopic() {
-        currentStep = 'topic';
-        addMessage('bot', 'How can we help you? Select a topic:');
-        addQuickReplyButtons([
-            { label: '🆘 Need Help', value: 'Need Help' },
-            { label: '🐞 Bug Report', value: 'Bug Report' },
-            { label: '✨ Feature Request', value: 'Feature Request' },
-            { label: '💬 General Feedback', value: 'Feedback' }
-        ], (selectedTopic) => {
-            userData.topic = selectedTopic;
-            addMessage('user', selectedTopic);
-            askMessage();
-        });
-    }
-    
-    function askMessage() {
-        currentStep = 'message';
-        addMessage('bot', 'Please describe your issue or feedback in detail. Tell us anything we should know:');
-    }
-    
-    function showConfirmation() {
-        currentStep = 'confirm';
-        const summary = `
-            <strong>📋 Please review:</strong><br>
-            • Name: ${escapeHtml(userData.name)}<br>
-            • Email: ${escapeHtml(userData.email)}<br>
-            • Topic: ${escapeHtml(userData.topic)}<br>
-            • Message: ${escapeHtml(userData.message.substring(0, 180))}${userData.message.length > 180 ? '…' : ''}<br>
-            <em>Ready to send?</em>
-        `;
-        addMessage('bot', summary, true);
-        addConfirmActions(() => submitFeedback(), () => {
-            addMessage('bot', '🔄 Restarting from scratch — no worries, let\'s do it fresh!');
-            fullReset();
-        });
-    }
-    
-    function escapeHtml(str) {
-        if (!str) return '';
-        return str.replace(/[&<>]/g, m => {
-            if (m === '&') return '&amp;';
-            if (m === '<') return '&lt;';
-            if (m === '>') return '&gt;';
-            return m;
-        });
-    }
-    
-    async function processUserText(rawText) {
-        const text = rawText.trim();
-        if (text === "") {
-            addMessage('bot', 'Please write something — I’m here to help 😊');
-            return;
+            messageDiv.appendChild(bubbleDiv);
+            messagesContainer.appendChild(messageDiv);
+            scrollToBottom();
         }
-        if (currentStep === 'finished') {
-            addMessage('bot', '🔄 This conversation is completed. Press "Restart" to send another request.');
+
+        // Remove temporary interactive elements (quick replies, action buttons)
+        function removeTempInteractiveElements() {
+            document.querySelectorAll('.temp-interactive').forEach(el => el.remove());
+        }
+
+        // Add quick reply buttons
+        function addQuickReplyButtons(options, onSelectCallback) {
+            removeTempInteractiveElements();
+            const wrapperDiv = document.createElement('div');
+            wrapperDiv.className = `message bot temp-interactive`;
+            const bubbleDiv = document.createElement('div');
+            bubbleDiv.className = 'bubble';
+            const buttonsContainer = document.createElement('div');
+            buttonsContainer.className = 'quick-replies';
+
+            options.forEach(opt => {
+                const btn = document.createElement('button');
+                btn.className = 'quick-btn';
+                btn.innerText = opt.label;
+                btn.addEventListener('click', () => {
+                    document.querySelectorAll('.quick-btn').forEach(b => b.disabled = true);
+                    onSelectCallback(opt.value);
+                    wrapperDiv.remove();
+                });
+                buttonsContainer.appendChild(btn);
+            });
+
+            bubbleDiv.appendChild(buttonsContainer);
+            wrapperDiv.appendChild(bubbleDiv);
+            messagesContainer.appendChild(wrapperDiv);
+            scrollToBottom();
+        }
+
+        // Add confirm actions (Send & Edit)
+        function addConfirmActions(onSend, onEdit) {
+            removeTempInteractiveElements();
+            const actionWrapper = document.createElement('div');
+            actionWrapper.className = `message bot temp-interactive`;
+            const bubbleDiv = document.createElement('div');
+            bubbleDiv.className = 'bubble';
+            const actionsDiv = document.createElement('div');
+            actionsDiv.className = 'action-buttons';
+
+            const sendAction = document.createElement('button');
+            sendAction.innerText = '✅ Send Feedback';
+            sendAction.className = 'action-btn primary';
+            sendAction.addEventListener('click', () => {
+                sendAction.disabled = true;
+                const editBtn = actionsDiv.querySelector('.action-btn.secondary');
+                if (editBtn) editBtn.disabled = true;
+                onSend();
+            });
+
+            const editAction = document.createElement('button');
+            editAction.innerText = '✏️ Edit / Start over';
+            editAction.className = 'action-btn secondary';
+            editAction.addEventListener('click', () => {
+                onEdit();
+            });
+
+            actionsDiv.appendChild(sendAction);
+            actionsDiv.appendChild(editAction);
+            bubbleDiv.appendChild(actionsDiv);
+            actionWrapper.appendChild(bubbleDiv);
+            messagesContainer.appendChild(actionWrapper);
+            scrollToBottom();
+        }
+
+        // Show typing indicator
+        async function showTyping(duration = 1000) {
+            const typingDiv = document.createElement('div');
+            typingDiv.className = 'message bot temp-interactive';
+            typingDiv.id = 'typingIndicator';
+            const bubble = document.createElement('div');
+            bubble.className = 'bubble typing-indicator';
+            bubble.innerHTML = '<span></span><span></span><span></span>';
+            typingDiv.appendChild(bubble);
+            messagesContainer.appendChild(typingDiv);
+            scrollToBottom();
+            await new Promise(r => setTimeout(r, duration));
+            document.getElementById('typingIndicator')?.remove();
+        }
+
+        // Reset everything
+        function fullReset() {
+            currentStep = 'init';
+            userData = { name: '', email: '', topic: '', message: '' };
+            messagesContainer.innerHTML = '';
+            removeTempInteractiveElements();
+            startConversation();
+            userInput.disabled = false;
+            userInput.placeholder = "Type your answer...";
             userInput.value = '';
-            return;
         }
-        
-        addMessage('user', text);
-        userInput.value = '';
-        removeTempInteractiveElements();
-        
-        switch (currentStep) {
-            case 'name':
-                if (text.length < 2) addMessage('bot', 'Please enter a valid name (at least 2 characters).');
-                else { userData.name = text; askEmail(); }
-                break;
-            case 'email':
-                const emailRegex = /^[^\s@]+@([^\s@]+\.)+[^\s@]+$/;
-                if (!emailRegex.test(text)) addMessage('bot', 'Please enter a valid email (e.g., name@example.com).');
-                else { userData.email = text; askTopic(); }
-                break;
-            case 'topic':
-                const lower = text.toLowerCase();
-                let mapped = null;
-                if (lower.includes('help') || lower.includes('support')) mapped = 'Need Help';
-                else if (lower.includes('bug') || lower.includes('error')) mapped = 'Bug Report';
-                else if (lower.includes('feature') || lower.includes('request')) mapped = 'Feature Request';
-                else if (lower.includes('feedback') || lower.includes('comment')) mapped = 'Feedback';
-                if (mapped) {
-                    userData.topic = mapped;
-                    addMessage('bot', `Selected topic: ${mapped}`);
-                    askMessage();
+
+        // ---------- Conversation Steps ----------
+        async function startConversation() {
+            addMessage('bot', '👋 Hey there! I\'m your support assistant. I\'ll help you send feedback or request help. Let\'s get started!');
+            await showTyping(500);
+            askName();
+        }
+
+        function askName() {
+            currentStep = 'name';
+            addMessage('bot', 'What\'s your name?');
+        }
+
+        function askEmail() {
+            currentStep = 'email';
+            addMessage('bot', 'Great! What\'s your email address? (So we can reply)');
+        }
+
+        function askTopic() {
+            currentStep = 'topic';
+            addMessage('bot', 'How can we help you? Select a topic:');
+            addQuickReplyButtons([
+                { label: '🆘 Need Help', value: 'Need Help' },
+                { label: '🐞 Bug Report', value: 'Bug Report' },
+                { label: '✨ Feature Request', value: 'Feature Request' },
+                { label: '💬 General Feedback', value: 'Feedback' }
+            ], (selectedTopic) => {
+                userData.topic = selectedTopic;
+                addMessage('user', selectedTopic);
+                askMessage();
+            });
+        }
+
+        function askMessage() {
+            currentStep = 'message';
+            addMessage('bot', 'Please describe your issue or feedback in detail. Tell us anything we should know:');
+        }
+
+        function showConfirmation() {
+            currentStep = 'confirm';
+            const summary = `
+                <strong>📋 Please review:</strong><br>
+                • Name: ${escapeHtml(userData.name)}<br>
+                • Email: ${escapeHtml(userData.email)}<br>
+                • Topic: ${escapeHtml(userData.topic)}<br>
+                • Message: ${escapeHtml(userData.message.substring(0, 120))}${userData.message.length > 120 ? '…' : ''}<br>
+                <em>Ready to send?</em>
+            `;
+            addMessage('bot', summary, true);
+            addConfirmActions(() => submitFeedback(), () => {
+                addMessage('bot', '🔄 Restarting from scratch — let\'s do it fresh!');
+                fullReset();
+            });
+        }
+
+        // Submit using FormSubmit with fallback to mailto
+        async function submitFeedback() {
+            addMessage('bot', '⏳ Sending your message, one moment...');
+            const endpoint = 'https://formsubmit.co/tivalsdeveloper@gmail.com';
+            
+            const formData = new URLSearchParams();
+            formData.append('name', userData.name);
+            formData.append('email', userData.email);
+            formData.append('topic', userData.topic);
+            formData.append('message', userData.message);
+            formData.append('_subject', `[Chatbot] Support Request from ${userData.name}`);
+            formData.append('_captcha', 'false');
+
+            try {
+                const response = await fetch(endpoint, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                        'Accept': 'application/json'
+                    },
+                    body: formData.toString()
+                });
+
+                // Check if response is successful and likely JSON
+                if (response.ok) {
+                    // Try to parse JSON, but if it fails, assume success (some endpoints return empty)
+                    let success = false;
+                    try {
+                        const result = await response.json();
+                        // FormSubmit returns { success: true } when successful
+                        success = (result && (result.success === true || result.success === 'true'));
+                    } catch (e) {
+                        // If JSON parsing fails but status is 200, consider it success
+                        success = true;
+                    }
+                    
+                    if (success) {
+                        addMessage('bot', '✅ **Message sent successfully!** 🎉 Thank you for reaching out. Our team will get back to you soon.', true);
+                        currentStep = 'finished';
+                        // Remove any lingering confirm buttons
+                        removeTempInteractiveElements();
+                        addMessage('bot', '💡 Need anything else? Hit the "Restart" button to start a new conversation.');
+                        return;
+                    } else {
+                        throw new Error('FormSubmit returned success: false');
+                    }
+                } else if (response.status === 403 || response.status === 405) {
+                    // Unverified email or other form error
+                    addMessage('bot', '⚠️ **Email not verified on FormSubmit.** Please verify your email address at [formsubmit.co](https://formsubmit.co/tivalsdeveloper@gmail.com) and try again. Meanwhile, you can use the manual option below.', true);
+                    offerMailtoFallback();
                 } else {
-                    addMessage('bot', 'Please select a topic using the buttons, or type one of: Help, Bug Report, Feature Request, Feedback.');
-                    askTopic(); // show buttons again
+                    throw new Error(`HTTP ${response.status}`);
                 }
-                break;
-            case 'message':
-                if (text.length < 5) addMessage('bot', 'Please provide at least 5 characters.');
-                else {
-                    userData.message = text;
-                    await showTyping(500);
-                    showConfirmation();
-                }
-                break;
-            default:
-                if (currentStep === 'confirm') addMessage('bot', 'Please use the "Send Feedback" or "Edit / Start over" buttons.');
-                else addMessage('bot', 'I’m not sure what happened. Press "Restart" to start over.');
-                break;
+            } catch (error) {
+                console.error('Fetch error:', error);
+                addMessage('bot', '⚠️ Could not send via FormSubmit. Would you like to send the message manually via email?', true);
+                offerMailtoFallback();
+            }
         }
-    }
-    
-    // Event handlers
-    function handleSend() {
-        const raw = userInput.value;
-        if (raw.trim() === "") return;
-        processUserText(raw);
-    }
-    
-    sendBtn.addEventListener('click', handleSend);
-    userInput.addEventListener('keypress', e => { if (e.key === 'Enter') { e.preventDefault(); handleSend(); } });
-    resetBtn.addEventListener('click', () => fullReset());
-    
-    // Start the chat
-    startConversation();
-    userInput.focus();
+
+        // Fallback: open mail client with pre-filled data
+        function offerMailtoFallback() {
+            const subject = encodeURIComponent(`Support Request from ${userData.name}`);
+            const body = encodeURIComponent(
+                `Name: ${userData.name}\n` +
+                `Email: ${userData.email}\n` +
+                `Topic: ${userData.topic}\n\n` +
+                `Message:\n${userData.message}`
+            );
+            const mailtoLink = `mailto:tivalsdeveloper@gmail.com?subject=${subject}&body=${body}`;
+            
+            // Remove any existing fallback buttons to avoid duplicates
+            removeTempInteractiveElements();
+            const actionWrapper = document.createElement('div');
+            actionWrapper.className = `message bot temp-interactive`;
+            const bubbleDiv = document.createElement('div');
+            bubbleDiv.className = 'bubble';
+            const fallbackButton = document.createElement('button');
+            fallbackButton.innerText = '📧 Open Email App (Manual Send)';
+            fallbackButton.style.background = '#2563eb';
+            fallbackButton.style.color = 'white';
+            fallbackButton.style.border = 'none';
+            fallbackButton.style.padding = '10px 20px';
+            fallbackButton.style.borderRadius = '40px';
+            fallbackButton.style.cursor = 'pointer';
+            fallbackButton.style.fontWeight = 'bold';
+            fallbackButton.style.marginTop = '8px';
+            fallbackButton.addEventListener('click', () => {
+                window.location.href = mailtoLink;
+                addMessage('bot', '📧 Your email app should open. Please review and send the message. Once sent, you\'re all set!', true);
+                currentStep = 'finished';
+                fallbackButton.disabled = true;
+                // Remove the fallback button after use
+                actionWrapper.remove();
+            });
+            bubbleDiv.appendChild(fallbackButton);
+            actionWrapper.appendChild(bubbleDiv);
+            messagesContainer.appendChild(actionWrapper);
+            scrollToBottom();
+        }
+
+        // Helper: escape HTML
+        function escapeHtml(str) {
+            if (!str) return '';
+            return str.replace(/[&<>]/g, function(m) {
+                if (m === '&') return '&amp;';
+                if (m === '<') return '&lt;';
+                if (m === '>') return '&gt;';
+                return m;
+            });
+        }
+
+        // Premium button handler
+        function handlePremiumClick() {
+            const randomIndex = Math.floor(Math.random() * premiumCodes.length);
+            const selectedCode = premiumCodes[randomIndex];
+            addMessage('bot', `🎁 **Congratulations!** Here's your premium code:\n\n\`${selectedCode}\`\n\nUse it to unlock special features. Thank you for your support! ✨`, true);
+        }
+
+        // Process user text input
+        async function processUserText(rawText) {
+            const text = rawText.trim();
+            if (text === "") {
+                addMessage('bot', 'Please write something — I’m here to help 😊');
+                return;
+            }
+
+            if (currentStep === 'finished') {
+                addMessage('bot', '🔄 This conversation is completed. Press "Restart" to start a new conversation.');
+                userInput.value = '';
+                return;
+            }
+
+            addMessage('user', text);
+            userInput.value = '';
+            removeTempInteractiveElements();
+
+            switch (currentStep) {
+                case 'name':
+                    if (text.length < 2) {
+                        addMessage('bot', 'Please enter a valid name (at least 2 characters).');
+                    } else {
+                        userData.name = text;
+                        askEmail();
+                    }
+                    break;
+                case 'email':
+                    const emailRegex = /^[^\s@]+@([^\s@]+\.)+[^\s@]+$/;
+                    if (!emailRegex.test(text)) {
+                        addMessage('bot', 'That doesn\'t look like a valid email. Please enter a correct email (e.g., name@example.com).');
+                    } else {
+                        userData.email = text;
+                        askTopic();
+                    }
+                    break;
+                case 'topic':
+                    const lower = text.toLowerCase();
+                    let mapped = null;
+                    if (lower.includes('help') || lower.includes('support')) mapped = 'Need Help';
+                    else if (lower.includes('bug') || lower.includes('error')) mapped = 'Bug Report';
+                    else if (lower.includes('feature') || lower.includes('request')) mapped = 'Feature Request';
+                    else if (lower.includes('feedback') || lower.includes('comment')) mapped = 'Feedback';
+                    
+                    if (mapped) {
+                        userData.topic = mapped;
+                        addMessage('bot', `Selected topic: ${mapped}`);
+                        askMessage();
+                    } else {
+                        addMessage('bot', 'Please select a topic using the buttons above, or type: "Help", "Bug Report", "Feature Request", "Feedback".');
+                        askTopic(); // show buttons again
+                    }
+                    break;
+                case 'message':
+                    if (text.length < 5) {
+                        addMessage('bot', 'Please provide a bit more detail (at least 5 characters).');
+                    } else {
+                        userData.message = text;
+                        await showTyping(500);
+                        showConfirmation();
+                    }
+                    break;
+                default:
+                    addMessage('bot', 'I’m not sure what happened. Press "Restart" to start over.');
+            }
+        }
+
+        // Event handlers
+        function handleSend() {
+            const raw = userInput.value;
+            if (raw.trim() === "") return;
+            processUserText(raw);
+        }
+
+        sendBtn.addEventListener('click', handleSend);
+        userInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                handleSend();
+            }
+        });
+        resetBtn.addEventListener('click', fullReset);
+        premiumBtn.addEventListener('click', handlePremiumClick);
+
+        // Start the conversation
+        startConversation();
+    })();
 </script>
 </body>
 </html>
